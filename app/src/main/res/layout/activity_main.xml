@@ -10,7 +10,7 @@
     android:background="#ffffff">
 
     <FrameLayout
-        android:id="@+id/layout1"
+        android:id="@+id/air_conditioner_layout"
         android:layout_width="360dp"
         android:layout_height="115dp"
         android:layout_alignParentTop="true"
@@ -22,7 +22,7 @@
         <RelativeLayout
             android:layout_width="360dp"
             android:layout_height="115dp"
-            android:background="@drawable/vien">
+            android:background="@drawable/border">
 
             <TextView
                 android:id="@+id/air_conditioner_label"
@@ -38,66 +38,135 @@
                 android:textColor="#BDBDBD"/>
 
             <TextView
-                android:id="@+id/temp_value"
+                android:id="@+id/remote_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/air_conditioner_label"
-                android:layout_marginBottom="24dp"
+
+                android:layout_marginBottom="26dp"
                 android:fontFamily="@font/nunito_bold"
-                android:text="@string/number"
+                android:text=""
                 android:textSize="20dp"
                 />
 
             <TextView
+                android:id="@+id/temp_percent_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/temp_value"
-                android:layout_toEndOf="@+id/temp_value"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/air_conditioner_label"
+                android:layout_marginBottom="11dp"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#2D976B"
+                android:layout_marginStart="15dp"
+
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/percent_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/temp_percent_up"
+                android:layout_toEndOf="@+id/temp_percent_up"
+                android:layout_marginBottom="11dp"
+                android:fontFamily="@font/nunito_bold"
+
+                android:textColor="#2D976B"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/temp_percent_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/air_conditioner_label"
+                android:layout_marginStart="15dp"
+                android:layout_alignTop="@+id/temp_percent_up"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#FF0000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/percent_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/temp_percent_down"
+                android:layout_toEndOf="@+id/temp_percent_down"
+                android:layout_marginBottom="11dp"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#FF0000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/remote_value"
+                android:layout_toEndOf="@+id/remote_value"
                 android:fontFamily="@font/nunito_bold"
                 android:text="°C"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
 
             <ImageButton
-                android:id="@+id/but_down"
+                android:id="@+id/button_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="86dp"
-                android:background="@drawable/button"
+                android:background="#ffffff"
                 app:srcCompat="@drawable/down"
-
-
-
                 />
 
             <ImageButton
-                android:id="@+id/but_up"
+                android:id="@+id/button_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="35dp"
-                android:background="@drawable/button"
+                android:background="#ffffff"
                 app:srcCompat="@drawable/up" />
+
+
+
+
+            <ImageView
+                android:id="@+id/imageTempDown"
+                android:layout_width="28dp"
+                android:layout_height="15dp"
+
+                android:layout_alignEnd="@+id/remote_value"
+                android:layout_below="@+id/remote_value"
+                android:layout_marginTop="-26dp"
+                app:srcCompat="@drawable/down_arrow" />
+
+            <ImageView
+                android:id="@+id/imageTempUp"
+                android:layout_width="28dp"
+                android:layout_height="15dp"
+
+                android:layout_alignEnd="@+id/remote_value"
+                android:layout_below="@+id/remote_value"
+                android:layout_marginTop="-26dp"
+                app:srcCompat="@drawable/up_arrow" />
+
 
 
         </RelativeLayout>
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/layout2"
+        android:id="@+id/temperature_layout"
         android:layout_width="360dp"
-        android:layout_height="115dp"
+        android:layout_height="153dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="140dp">
 
         <RelativeLayout
             android:layout_width="360dp"
-            android:layout_height="115dp"
-            android:background="@drawable/vien">
+            android:layout_height="153dp"
+            android:background="@drawable/border">
 
             <TextView
                 android:id="@+id/indoor_temperature_label"
@@ -107,11 +176,10 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                android:text="Indoor Temperature"
-                android:textSize="13dp"
                 android:fontFamily="@font/nunito_bold"
+                android:text="Indoor Temperature"
                 android:textColor="#BDBDBD"
-                />
+                android:textSize="13dp" />
 
             <TextView
                 android:id="@+id/indoor_temp_value"
@@ -119,30 +187,70 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignStart="@+id/indoor_temperature_label"
-                android:layout_marginTop="29dp"
-                android:text="20"
+                android:layout_marginTop="45dp"
                 android:fontFamily="@font/nunito_bold"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/indoor_temp_value"
                 android:layout_toEndOf="@+id/indoor_temp_value"
-                android:text="°C"
                 android:fontFamily="@font/nunito_bold"
-                android:textSize="20dp"/>
+                android:text="°C"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/in_percent_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignStart="@+id/out_percent_up"
+                android:layout_alignTop="@+id/indoor_temp_value"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#2D976B"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/syl_in_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:layout_toEndOf="@+id/in_percent_up"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#2D976B"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/in_percent_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/in_percent_up"
+                android:layout_alignTop="@+id/indoor_temp_value"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#FF0000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/syl_in_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="45dp"
+                android:layout_toEndOf="@+id/in_percent_down"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#FF0000"
+                android:textSize="12dp" />
 
             <TextView
                 android:id="@+id/outdoor_temperature_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/indoor_temperature_label"
-                android:layout_marginTop="57dp"
-                android:text="Outdoor Temperature"
-                android:textSize="13dp"
+                android:layout_marginTop="80dp"
                 android:fontFamily="@font/nunito_bold"
-                android:textColor="#BDBDBD"/>
+                android:text="Outdoor Temperature"
+                android:textColor="#BDBDBD"
+                android:textSize="13dp" />
 
             <TextView
                 android:id="@+id/outdoor_temp_value"
@@ -151,18 +259,111 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/indoor_temperature_label"
                 android:layout_marginBottom="15dp"
-                android:text="15"
-                android:textSize="20dp"
-                android:fontFamily="@font/nunito_bold"/>
+
+                android:fontFamily="@font/nunito_bold"
+                android:textSize="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/outdoor_temp_value"
                 android:layout_toEndOf="@+id/outdoor_temp_value"
+                android:fontFamily="@font/nunito_bold"
                 android:text="°C"
-                android:textSize="20dp"
-                android:fontFamily="@font/nunito_bold"/>
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/out_percent_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_alignStart="@+id/out_percent_down"
+                android:layout_alignTop="@+id/outdoor_temp_value"
+                android:textColor="#2D976B"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/syl_out_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignTop="@+id/outdoor_temp_value"
+                android:layout_toEndOf="@+id/out_percent_up"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#2D976B"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/out_percent_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="85dp"
+                android:layout_alignTop="@+id/outdoor_temp_value"
+                android:textColor="#FF0000"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/syl_out_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/outdoor_temp_value"
+                android:layout_toEndOf="@+id/out_percent_down"
+                android:fontFamily="@font/nunito_bold"
+                android:textColor="#FF0000"
+                android:textSize="12dp" />
+
+            <ImageView
+                android:id="@+id/imageInDown"
+                android:layout_width="28dp"
+                android:layout_height="15dp"
+                android:layout_alignStart="@+id/imageInUp"
+                android:layout_alignTop="@+id/in_percent_up"
+                app:srcCompat="@drawable/down_arrow" />
+
+            <ImageView
+                android:id="@+id/imageInUp"
+                android:layout_width="28dp"
+                android:layout_height="15dp"
+                android:layout_alignStart="@+id/imageOutDown"
+                android:layout_alignTop="@+id/in_percent_up"
+                app:srcCompat="@drawable/up_arrow" />
+
+            <ImageView
+                android:id="@+id/imageOutDown"
+                android:layout_width="28dp"
+                android:layout_height="15dp"
+                android:layout_alignStart="@+id/imageOutUp"
+                android:layout_alignTop="@+id/outdoor_temp_value"
+                app:srcCompat="@drawable/down_arrow" />
+
+            <ImageView
+                android:id="@+id/imageOutUp"
+                android:layout_width="28dp"
+                android:layout_height="15dp"
+
+                android:layout_marginTop="110dp"
+                android:layout_marginStart="65dp"
+                app:srcCompat="@drawable/up_arrow" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/IndoorChart"
+                android:layout_width="185dp"
+                android:layout_height="65dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/indoor_temperature_label"
+                android:layout_marginTop="-15dp">
+
+            </com.github.mikephil.charting.charts.BarChart>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/OutdoorChart"
+                android:layout_width="185dp"
+                android:layout_height="65dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true">
+
+            </com.github.mikephil.charting.charts.BarChart>
 
 
         </RelativeLayout>
@@ -170,15 +371,15 @@
 
     <FrameLayout
         android:layout_width="360dp"
-        android:layout_height="115dp"
+        android:layout_height="79dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="227dp">
+        android:layout_marginBottom="280dp">
 
         <RelativeLayout
             android:layout_width="360dp"
-            android:layout_height="115dp"
-            android:background="@drawable/vien">
+            android:layout_height="79dp"
+            android:background="@drawable/border">
 
             <TextView
                 android:id="@+id/record_label"
@@ -188,24 +389,39 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
-                android:text="Number of Records"
-                android:textSize="13dp"
                 android:fontFamily="@font/nunito_bold"
-                android:textColor="#BDBDBD"/>
+                android:text="Number of Records"
+                android:textColor="#BDBDBD"
+                android:textSize="13dp" />
 
             <TextView
-                android:id="@+id/record_value"
+                android:id="@+id/total_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignStart="@+id/record_label"
                 android:layout_marginBottom="23dp"
                 android:fontFamily="@font/nunito_bold"
-                android:text="1000"
-                android:textSize="20dp"/>
+
+                android:textSize="20dp" />
         </RelativeLayout>
 
     </FrameLayout>
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart"
+        android:layout_width="359dp"
+        android:layout_height="246dp"
+
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:transitionName="hi">
+
+    </com.github.mikephil.charting.charts.LineChart>
+
 
 
 </RelativeLayout>
