@@ -49,10 +49,9 @@
                 android:id="@+id/temp_percent_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignStart="@+id/air_conditioner_label"
-                android:layout_marginBottom="11dp"
-                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/air_conditioner_label"
+                android:layout_marginStart="90dp"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="#2D976B"
                 android:textSize="12sp" />
@@ -62,10 +61,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/temp_percent_up"
-                android:layout_marginBottom="11dp"
                 android:layout_toEndOf="@+id/temp_percent_up"
                 android:fontFamily="@font/nunito_bold"
-
                 android:textColor="#2D976B"
                 android:textSize="12sp" />
 
@@ -73,9 +70,9 @@
                 android:id="@+id/temp_percent_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/air_conditioner_label"
-                android:layout_alignTop="@+id/temp_percent_up"
-                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/air_conditioner_label"
+                android:layout_marginStart="90dp"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="#FF0000"
                 android:textSize="12sp" />
@@ -85,7 +82,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/temp_percent_down"
-                android:layout_marginBottom="11dp"
                 android:layout_toEndOf="@+id/temp_percent_down"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="#FF0000"
@@ -125,18 +121,18 @@
                 android:id="@+id/imageTempDown"
                 android:layout_width="28dp"
                 android:layout_height="19dp"
-
                 android:layout_marginStart="65dp"
-                android:layout_alignTop="@+id/remote_value"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/air_conditioner_label"
                 app:srcCompat="@drawable/down_arrow" />
 
             <ImageView
                 android:id="@+id/imageTempUp"
                 android:layout_width="28dp"
                 android:layout_height="19dp"
-
                 android:layout_marginStart="65dp"
-                android:layout_alignTop="@+id/remote_value"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/air_conditioner_label"
                 app:srcCompat="@drawable/up_arrow" />
 
 
@@ -185,14 +181,15 @@
                 android:layout_toEndOf="@+id/indoor_temp_value"
                 android:fontFamily="@font/nunito_bold"
                 android:text="@string/celcius"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/in_percent_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/out_percent_up"
-                android:layout_alignTop="@+id/indoor_temp_value"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/indoor_temperature_label"
+                android:layout_marginStart="90dp"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="#2D976B"
                 android:textSize="12sp" />
@@ -201,7 +198,7 @@
                 android:id="@+id/syl_in_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
+                android:layout_alignTop="@+id/in_percent_up"
                 android:layout_toEndOf="@+id/in_percent_up"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="#2D976B"
@@ -211,8 +208,9 @@
                 android:id="@+id/in_percent_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/in_percent_up"
-                android:layout_alignTop="@+id/indoor_temp_value"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/indoor_temperature_label"
+                android:layout_marginStart="90dp"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="#FF0000"
                 android:textSize="12sp" />
@@ -221,7 +219,7 @@
                 android:id="@+id/syl_in_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
+                android:layout_alignTop="@+id/in_percent_down"
                 android:layout_toEndOf="@+id/in_percent_down"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="#FF0000"
@@ -246,7 +244,6 @@
                 android:layout_below="@id/outdoor_temperature_label"
                 android:layout_alignStart="@+id/indoor_temperature_label"
                 android:layout_marginBottom="15dp"
-
                 android:fontFamily="@font/nunito_bold"
                 android:textSize="20sp" />
 
@@ -263,8 +260,9 @@
                 android:id="@+id/out_percent_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/out_percent_down"
-                android:layout_alignTop="@+id/outdoor_temp_value"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/outdoor_temperature_label"
+                android:layout_marginStart="90dp"
                 android:textColor="#2D976B"
                 android:textSize="12sp" />
 
@@ -272,7 +270,7 @@
                 android:id="@+id/syl_out_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/outdoor_temp_value"
+                android:layout_alignTop="@+id/out_percent_up"
                 android:layout_toEndOf="@+id/out_percent_up"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="#2D976B"
@@ -282,8 +280,9 @@
                 android:id="@+id/out_percent_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/outdoor_temp_value"
-                android:layout_marginStart="85dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/outdoor_temperature_label"
+                android:layout_marginStart="90dp"
                 android:textColor="#FF0000"
                 android:textSize="12sp" />
 
@@ -291,7 +290,7 @@
                 android:id="@+id/syl_out_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/outdoor_temp_value"
+                android:layout_alignTop="@+id/out_percent_down"
                 android:layout_toEndOf="@+id/out_percent_down"
                 android:fontFamily="@font/nunito_bold"
                 android:textColor="#FF0000"
@@ -301,24 +300,27 @@
                 android:id="@+id/imageInDown"
                 android:layout_width="28dp"
                 android:layout_height="19dp"
-                android:layout_alignStart="@+id/imageInUp"
-                android:layout_alignTop="@+id/in_percent_up"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/indoor_temperature_label"
                 app:srcCompat="@drawable/down_arrow" />
 
             <ImageView
                 android:id="@+id/imageInUp"
                 android:layout_width="28dp"
                 android:layout_height="19dp"
-                android:layout_alignStart="@+id/imageOutDown"
-                android:layout_alignTop="@+id/in_percent_up"
+                android:layout_marginStart="65dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/indoor_temperature_label"
                 app:srcCompat="@drawable/up_arrow" />
 
             <ImageView
                 android:id="@+id/imageOutDown"
                 android:layout_width="28dp"
-                android:layout_height="20dp"
+                android:layout_height="19dp"
                 android:layout_marginStart="65dp"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/outdoor_temperature_label"
                 app:srcCompat="@drawable/down_arrow" />
 
             <ImageView
@@ -326,7 +328,8 @@
                 android:layout_width="28dp"
                 android:layout_height="19dp"
                 android:layout_marginStart="65dp"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/outdoor_temperature_label"
                 app:srcCompat="@drawable/up_arrow" />
 
             <com.github.mikephil.charting.charts.BarChart
