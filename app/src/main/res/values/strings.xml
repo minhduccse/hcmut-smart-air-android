@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">SmartAir</string>
     <string name="number">20</string>
+    <string name="celcius">°C</string>
+    <string name="air_conditioner_label">Air Conditioner</string>
+    <string name="indoor_temperature_label">Indoor Temperature</string>
+    <string name="outdoor_temperature_label">Outdoor Temperature</string>
+    <string name="record_label">Number of Records</string>
+
 </resources>
