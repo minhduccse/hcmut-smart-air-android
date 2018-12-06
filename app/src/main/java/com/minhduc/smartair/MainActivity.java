@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,17 +37,16 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private int total;
-    private int indoorNow;
-    private int outdoorNow;
-    private int remoteNow;
+    private int remoteNow, indoorNow, outdoorNow;
+    private int prevRemote, prevIndoor, prevOutdoor;
     private int remoteIdx;
 
     private TextView mTotalValue, mRemoteValue, mIndoorTempValue, mOutdoorTempValue;
-    private TextView mTempPercentUp,mTempPercentDown,mPercentUp,mPercentDown;
-    private TextView mInPercentUp,mInPercentDown,mPercentInUp,mPercentInDown;
-    private TextView mOutPercentUp,mOutPercentDown,mPercentOutUp,mPercentOutDown;
+    private TextView mTempPercentUp, mTempPercentDown, mPercentUp, mPercentDown;
+    private TextView mIndoorDeltaUp, mIndoorDeltaDown, mIndoorPercentUp, mIndoorPercentDown;
+    private TextView mOutdoorDeltaUp, mOutdoorDeltaDown, mOutdoorPercentUp, mOutdoorPercentDown;
 
-    private ImageView mTempDown, mTempUp, mInUp, mInDown, mOutUp, mOutDown;
+    private ImageView mTempDown, mTempUp, mIndoorImgUp, mIndoorImgDown, mOutdoorImgUp, mOutdoorImgDown;
 
     public ImageButton mBtnUp, mBtnDown;
 
@@ -87,28 +88,28 @@ public class MainActivity extends AppCompatActivity {
         mTempUp = (ImageView) findViewById(R.id.imageTempUp);
 
         //------------------------indoor-------------------------
-        mInPercentUp = (TextView) findViewById(R.id.in_percent_up);
-        mInPercentDown = (TextView) findViewById(R.id.in_percent_down);
-        mPercentInUp = (TextView) findViewById(R.id.syl_in_up);
-        mPercentInDown = (TextView) findViewById(R.id.syl_in_down);
-        mInDown = (ImageView) findViewById(R.id.imageInDown);
-        mInUp = (ImageView) findViewById(R.id.imageInUp);
+        mIndoorDeltaUp = (TextView) findViewById(R.id.in_percent_up);
+        mIndoorDeltaDown = (TextView) findViewById(R.id.in_percent_down);
+        mIndoorPercentUp = (TextView) findViewById(R.id.syl_in_up);
+        mIndoorPercentDown = (TextView) findViewById(R.id.syl_in_down);
+        mIndoorImgDown = (ImageView) findViewById(R.id.imageInDown);
+        mIndoorImgUp = (ImageView) findViewById(R.id.imageInUp);
 
         //------------------------outdoor------------------------
-        mOutPercentUp = (TextView) findViewById(R.id.out_percent_up);
-        mOutPercentDown = (TextView) findViewById(R.id.out_percent_down);
-        mPercentOutUp = (TextView) findViewById(R.id.syl_out_up);
-        mPercentOutDown = (TextView) findViewById(R.id.syl_out_down);
-        mOutDown = (ImageView) findViewById(R.id.imageOutDown);
-        mOutUp = (ImageView) findViewById(R.id.imageOutUp);
+        mOutdoorDeltaUp = (TextView) findViewById(R.id.out_percent_up);
+        mOutdoorDeltaDown = (TextView) findViewById(R.id.out_percent_down);
+        mOutdoorPercentUp = (TextView) findViewById(R.id.syl_out_up);
+        mOutdoorPercentDown = (TextView) findViewById(R.id.syl_out_down);
+        mOutdoorImgDown = (ImageView) findViewById(R.id.imageOutDown);
+        mOutdoorImgUp = (ImageView) findViewById(R.id.imageOutUp);
 
         //-------------------------------------------------------
         mTempDown.setVisibility(View.INVISIBLE);
         mTempUp.setVisibility(View.INVISIBLE);
-        mInDown.setVisibility(View.INVISIBLE);
-        mInUp.setVisibility(View.INVISIBLE);
-        mOutDown.setVisibility(View.INVISIBLE);
-        mOutUp.setVisibility(View.INVISIBLE);
+        mIndoorImgDown.setVisibility(View.INVISIBLE);
+        mIndoorImgUp.setVisibility(View.INVISIBLE);
+        mOutdoorImgDown.setVisibility(View.INVISIBLE);
+        mOutdoorImgUp.setVisibility(View.INVISIBLE);
 
         //-------------------------------------------------------
         indoorBarChart.setNoDataText("");
@@ -132,13 +133,34 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         //---------------------------------------------------------
         indoorNowRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                prevIndoor = indoorNow;
                 indoorNow = Integer.parseInt(dataSnapshot.getValue().toString());
                 mIndoorTempValue.setText(dataSnapshot.getValue().toString());
+
+                if(prevIndoor < indoorNow && prevIndoor != 0){
+                    float result = ((float)(indoorNow - prevIndoor) / (float)prevIndoor)*100;
+                    String str = String.format("%.2f", result);
+                    mIndoorDeltaDown.setText("");
+                    mIndoorPercentDown.setText("");
+                    mIndoorImgDown.setVisibility(View.INVISIBLE);
+                    mIndoorImgUp.setVisibility(View.VISIBLE);
+                    mIndoorDeltaUp.setText(str);
+                    mIndoorPercentUp.setText("%");
+                }
+                else if(prevIndoor > indoorNow && prevIndoor != 0){
+                    float result = ((float)(prevIndoor - indoorNow) / (float)prevIndoor)*100;
+                    String str = String.format("%.2f", result);
+                    mIndoorDeltaUp.setText("");
+                    mIndoorPercentUp.setText("");
+                    mIndoorImgUp.setVisibility(View.INVISIBLE);
+                    mIndoorImgDown.setVisibility(View.VISIBLE);
+                    mIndoorDeltaDown.setText(str);
+                    mIndoorPercentDown.setText("%");
+                }
             }
 
             @Override
@@ -148,8 +170,30 @@ public class MainActivity extends AppCompatActivity {
         outdoorNowRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                prevOutdoor = outdoorNow;
                 outdoorNow = Integer.parseInt(dataSnapshot.getValue().toString());
                 mOutdoorTempValue.setText(dataSnapshot.getValue().toString());
+
+                if(prevOutdoor < outdoorNow && prevOutdoor != 0){
+                    float result = ((float)(outdoorNow - prevOutdoor) / (float)prevOutdoor)*100;
+                    String str = String.format("%.2f", result);
+                    mOutdoorDeltaDown.setText("");
+                    mOutdoorPercentDown.setText("");
+                    mOutdoorImgDown.setVisibility(View.INVISIBLE);
+                    mOutdoorImgUp.setVisibility(View.VISIBLE);
+                    mOutdoorDeltaUp.setText(str);
+                    mOutdoorPercentUp.setText("%");
+                }
+                else if(prevOutdoor > outdoorNow && prevOutdoor != 0){
+                    float result = ((float)(prevOutdoor - outdoorNow) / (float)prevOutdoor)*100;
+                    String str = String.format("%.2f", result);
+                    mOutdoorDeltaUp.setText("");
+                    mOutdoorPercentUp.setText("");
+                    mOutdoorImgUp.setVisibility(View.INVISIBLE);
+                    mOutdoorImgDown.setVisibility(View.VISIBLE);
+                    mOutdoorDeltaDown.setText(str);
+                    mOutdoorPercentDown.setText("%");
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
@@ -158,8 +202,30 @@ public class MainActivity extends AppCompatActivity {
         remoteNowRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                prevRemote = remoteNow;
                 remoteNow = Integer.parseInt(dataSnapshot.getValue().toString());
                 mRemoteValue.setText(dataSnapshot.getValue().toString());
+
+                if(prevRemote < remoteNow && prevRemote != 0){
+                    float result = ((float)(remoteNow - prevRemote) / (float)prevRemote)*100;
+                    String str = String.format("%.2f", result);
+                    mTempPercentDown.setText("");
+                    mPercentDown.setText("");
+                    mTempDown.setVisibility(View.INVISIBLE);
+                    mTempUp.setVisibility(View.VISIBLE);
+                    mTempPercentUp.setText(str);
+                    mPercentUp.setText("%");
+                }
+                else if(prevRemote > remoteNow && prevRemote != 0){
+                    float result = ((float)(prevRemote - remoteNow) / (float)prevRemote)*100;
+                    String str = String.format("%.2f", result);
+                    mTempPercentUp.setText("");
+                    mPercentUp.setText("");
+                    mTempUp.setVisibility(View.INVISIBLE);
+                    mTempDown.setVisibility(View.VISIBLE);
+                    mTempPercentDown.setText(str);
+                    mPercentDown.setText("%");
+                }
             }
 
             @Override
