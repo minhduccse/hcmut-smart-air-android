@@ -26,8 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,13 +52,18 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference remoteIdxRef, remoteRef, indoorRef, outdoorRef;
 
     LineDataSet dataSetIndoor, dataSetOutdoor;
-    BarChart indoorBarChart, outdoorBarChart;
     LineChart lineChart;
+
+    BarDataSet barDataSetIndoor, barDataSetOutdoor;
+    BarChart indoorBarChart, outdoorBarChart;
 
     final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     List<Entry> indoorEntries = new ArrayList<Entry>();
     List<Entry> outdoorEntries = new ArrayList<Entry>();
+
+    List<BarEntry> indoorBarEntries = new ArrayList<BarEntry>();
+    List<BarEntry> outdoorBarEntries = new ArrayList<BarEntry>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         remoteNowRef = FirebaseDatabase.getInstance().getReference().child("current").child("remoteNow");
 
         remoteRef = FirebaseDatabase.getInstance().getReference().child("remote");
-        indoorRef = FirebaseDatabase.getInstance().getReference().child("indoor");
+        indoorRef = FirebaseDatabase.getInstance().getReference().child("remote");
         outdoorRef = FirebaseDatabase.getInstance().getReference().child("outdoor");
 
 
@@ -259,50 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 indoorEntries.add(new Entry(Float.parseFloat(dataSnapshot.child("index").getValue().toString()),
                         Float.parseFloat(dataSnapshot.child("value").getValue().toString())));
 
-                dataSetIndoor = new LineDataSet(indoorEntries, "Indoor Temperature");
-                dataSetIndoor.setColor(Color.rgb(0,107,230));
-                dataSetIndoor.setCircleColor(Color.rgb(0,107,230));
-                dataSetIndoor.setLineWidth(2f);
-                dataSetIndoor.setCircleRadius(3f);
-                dataSetIndoor.setFillAlpha(65);
-                dataSetIndoor.setFillColor(Color.rgb(0,107,230));
-                dataSetIndoor.setValueTextColor(Color.BLACK);
-
-                dataSetOutdoor = new LineDataSet(outdoorEntries, "Outdoor Temperature");
-                dataSetOutdoor.setColor(Color.rgb(255,153,0));
-                dataSetOutdoor.setCircleColor(Color.rgb(255,153,0));
-                dataSetOutdoor.setLineWidth(2f);
-                dataSetOutdoor.setCircleRadius(3f);
-                dataSetOutdoor.setFillAlpha(65);
-                dataSetOutdoor.setFillColor(Color.rgb(255,153,0));
-                dataSetOutdoor.setValueTextColor(Color.BLACK);
-
-
-                lineChart.getData().notifyDataChanged();
-                lineChart.notifyDataSetChanged();
-                LineData lineData = new LineData(dataSetIndoor, dataSetOutdoor);
-                lineChart.setData(lineData);
-                lineChart.invalidate(); // refresh
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-
-
-
-        outdoorRef.orderByChild("index").limitToLast(5).addChildEventListener(new ChildEventListener() {
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                outdoorEntries.add(new Entry(Float.parseFloat(dataSnapshot.child("index").getValue().toString()),
+                indoorBarEntries.add(new BarEntry(Float.parseFloat(dataSnapshot.child("index").getValue().toString()),
                         Float.parseFloat(dataSnapshot.child("value").getValue().toString())));
 
                 dataSetIndoor = new LineDataSet(indoorEntries, "Indoor Temperature");
@@ -329,6 +289,75 @@ public class MainActivity extends AppCompatActivity {
                 LineData lineData = new LineData(dataSetIndoor, dataSetOutdoor);
                 lineChart.setData(lineData);
                 lineChart.invalidate(); // refresh
+
+                barDataSetIndoor = new BarDataSet(indoorBarEntries,"");
+                barDataSetIndoor.setColor(Color.rgb(0,107,230));
+
+                indoorBarChart.getData().notifyDataChanged();
+                indoorBarChart.notifyDataSetChanged();
+                BarData theData = new BarData(barDataSetIndoor);
+                theData.setDrawValues(false);
+                indoorBarChart.setData(theData);
+                indoorBarChart.invalidate();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+
+
+        outdoorRef.orderByChild("index").limitToLast(5).addChildEventListener(new ChildEventListener() {
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                outdoorEntries.add(new Entry(Float.parseFloat(dataSnapshot.child("index").getValue().toString()),
+                        Float.parseFloat(dataSnapshot.child("value").getValue().toString())));
+
+                outdoorBarEntries.add(new BarEntry(Float.parseFloat(dataSnapshot.child("index").getValue().toString()),
+                        Float.parseFloat(dataSnapshot.child("value").getValue().toString())));
+
+                dataSetIndoor = new LineDataSet(indoorEntries, "Indoor Temperature");
+                dataSetIndoor.setColor(Color.rgb(0,107,230));
+                dataSetIndoor.setCircleColor(Color.rgb(0,107,230));
+                dataSetIndoor.setLineWidth(2f);
+                dataSetIndoor.setCircleRadius(3f);
+                dataSetIndoor.setFillAlpha(65);
+                dataSetIndoor.setFillColor(Color.rgb(0,107,230));
+                dataSetIndoor.setValueTextColor(Color.BLACK);
+
+                dataSetOutdoor = new LineDataSet(outdoorEntries, "Outdoor Temperature");
+                dataSetOutdoor.setColor(Color.rgb(255,153,0));
+                dataSetOutdoor.setCircleColor(Color.rgb(255,153,0));
+                dataSetOutdoor.setLineWidth(2f);
+                dataSetOutdoor.setCircleRadius(3f);
+                dataSetOutdoor.setFillAlpha(65);
+                dataSetOutdoor.setFillColor(Color.rgb(255,153,0));
+                dataSetOutdoor.setValueTextColor(Color.BLACK);
+
+
+                lineChart.getData().notifyDataChanged();
+                lineChart.notifyDataSetChanged();
+                LineData lineData = new LineData(dataSetIndoor, dataSetOutdoor);
+                lineChart.setData(lineData);
+                lineChart.invalidate(); // refresh
+
+                barDataSetOutdoor = new BarDataSet(outdoorBarEntries,"");
+                barDataSetOutdoor.setColor(Color.rgb(255,153,0));
+
+                outdoorBarChart.getData().notifyDataChanged();
+                outdoorBarChart.notifyDataSetChanged();
+                BarData theData = new BarData(barDataSetOutdoor);
+                theData.setDrawValues(false);
+                outdoorBarChart.setData(theData);
+                outdoorBarChart.invalidate();
             }
 
             @Override
@@ -399,6 +428,56 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        if (indoorBarChart.getData() != null && indoorBarChart.getData().getDataSetCount() > 0) {
+            barDataSetIndoor = (BarDataSet) indoorBarChart.getData().getDataSetByIndex(0);
+            barDataSetIndoor.setValues(indoorBarEntries);
+            outdoorBarChart.getData().notifyDataChanged();
+            outdoorBarChart.notifyDataSetChanged();
+
+        } else {
+            barDataSetIndoor = new BarDataSet(indoorBarEntries,"");
+            barDataSetIndoor.setColor(Color.rgb(0,107,230));
+
+            BarData theData = new BarData(barDataSetIndoor);
+            theData.setDrawValues(false);
+            indoorBarChart.setData(theData);
+            indoorBarChart.invalidate();
+        }
+        XAxis xAxisIndoor = indoorBarChart.getXAxis();
+        xAxisIndoor.setEnabled(false);
+        indoorBarChart.getAxisLeft().setEnabled(false);
+        indoorBarChart.getAxisRight().setEnabled(false);
+        indoorBarChart.getDescription().setEnabled(false);
+        indoorBarChart.getLegend().setEnabled(false);
+        indoorBarChart.setTouchEnabled(false);
+        indoorBarChart.getDescription().setEnabled(false);
+
+
+        if (outdoorBarChart.getData() != null && outdoorBarChart.getData().getDataSetCount() > 0) {
+            barDataSetOutdoor = (BarDataSet) outdoorBarChart.getData().getDataSetByIndex(0);
+            barDataSetOutdoor.setValues(outdoorBarEntries);
+            outdoorBarChart.getData().notifyDataChanged();
+            outdoorBarChart.notifyDataSetChanged();
+
+        } else {
+            barDataSetOutdoor = new BarDataSet(outdoorBarEntries,"");
+            barDataSetOutdoor.setColor(Color.rgb(255,153,0));
+
+            BarData theData = new BarData(barDataSetOutdoor);
+            theData.setDrawValues(false);
+            outdoorBarChart.setData(theData);
+            outdoorBarChart.invalidate();
+        }
+        XAxis xAxisOutdoor = outdoorBarChart.getXAxis();
+        xAxisOutdoor.setEnabled(false);
+        outdoorBarChart.getAxisLeft().setEnabled(false);
+        outdoorBarChart.getAxisRight().setEnabled(false);
+        outdoorBarChart.getDescription().setEnabled(false);
+        outdoorBarChart.getLegend().setEnabled(false);
+        outdoorBarChart.setTouchEnabled(false);
+        outdoorBarChart.getDescription().setEnabled(false);
+
+
         if (lineChart.getData() != null && lineChart.getData().getDataSetCount() > 0) {
             dataSetIndoor = (LineDataSet) lineChart.getData().getDataSetByIndex(0);
             dataSetOutdoor = (LineDataSet) lineChart.getData().getDataSetByIndex(1);
@@ -426,13 +505,8 @@ public class MainActivity extends AppCompatActivity {
             dataSetOutdoor.setFillAlpha(65);
             dataSetOutdoor.setFillColor(Color.rgb(255,153,0));
             dataSetOutdoor.setValueTextColor(Color.BLACK);
-
-
             LineData data = new LineData(dataSetIndoor, dataSetOutdoor);
-
-
             lineChart.setData(data);
-
             lineChart.invalidate();
         }
 //        lineChart.setTouchEnabled(false);
