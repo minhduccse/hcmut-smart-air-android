@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private int prevRemote, prevIndoor, prevOutdoor;
     private int remoteIdx;
 
-    private TextView mTotalValue, mRemoteValue, mIndoorTempValue, mOutdoorTempValue;
+    private TextView mTotalValue, mRemoteValue, mIndoorTempValue, mOutdoorTempValue, mStatusValue;
     private TextView mTempPercentUp, mTempPercentDown, mPercentUp, mPercentDown;
     private TextView mIndoorDeltaUp, mIndoorDeltaDown, mIndoorPercentUp, mIndoorPercentDown;
     private TextView mOutdoorDeltaUp, mOutdoorDeltaDown, mOutdoorPercentUp, mOutdoorPercentDown;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     public ImageButton mBtnUp, mBtnDown;
 
-    private DatabaseReference totalRef, indoorNowRef, outdoorNowRef, remoteNowRef;
+    private DatabaseReference totalRef, indoorNowRef, outdoorNowRef, remoteNowRef, statusRef;
     private DatabaseReference remoteIdxRef, remoteRef, indoorRef, outdoorRef;
 
     LineDataSet dataSetIndoor, dataSetOutdoor;
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         mRemoteValue = (TextView) findViewById(R.id.remote_value);
         mIndoorTempValue = (TextView) findViewById(R.id.indoor_temp_value);
         mOutdoorTempValue = (TextView) findViewById(R.id.outdoor_temp_value);
+        mStatusValue = (TextView) findViewById(R.id.status_value);
         mTotalValue = (TextView) findViewById(R.id.total_value);
         mBtnDown = (ImageButton) findViewById(R.id.button_down);
         mBtnUp = (ImageButton) findViewById(R.id.button_up);
@@ -129,9 +130,10 @@ public class MainActivity extends AppCompatActivity {
         indoorNowRef = FirebaseDatabase.getInstance().getReference().child("current").child("indoorNow");
         outdoorNowRef = FirebaseDatabase.getInstance().getReference().child("current").child("outdoorNow");
         remoteNowRef = FirebaseDatabase.getInstance().getReference().child("current").child("remoteNow");
+        statusRef = FirebaseDatabase.getInstance().getReference().child("current").child("status");
 
         remoteRef = FirebaseDatabase.getInstance().getReference().child("remote");
-        indoorRef = FirebaseDatabase.getInstance().getReference().child("remote");
+        indoorRef = FirebaseDatabase.getInstance().getReference().child("indoor");
         outdoorRef = FirebaseDatabase.getInstance().getReference().child("outdoor");
 
 
@@ -229,6 +231,16 @@ public class MainActivity extends AppCompatActivity {
                     mTempPercentDown.setText(str);
                     mPercentDown.setText("%");
                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        statusRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mStatusValue.setText(dataSnapshot.getValue().toString());
             }
 
             @Override

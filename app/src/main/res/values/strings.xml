@@ -6,5 +6,6 @@
     <string name="indoor_temperature_label">Indoor Temperature</string>
     <string name="outdoor_temperature_label">Outdoor Temperature</string>
     <string name="record_label">Number of Records</string>
+    <string name="status_label">Status</string>
 
 </resources>
